@@ -19,5 +19,7 @@ public class TheMostExpensiveRealEstateThread implements Runnable {
         throw new RuntimeException(e);
       }
     }
+
+
   }
 }

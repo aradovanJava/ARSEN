@@ -1,5 +1,6 @@
 package hr.apisit.arsen;
 
+import hr.apisit.arsen.enumeration.City;
 import hr.apisit.arsen.model.Address;
 import hr.apisit.arsen.model.Owner;
 import hr.apisit.arsen.model.RealEstate;
@@ -9,10 +10,30 @@ import hr.apisit.arsen.user.input.InputUtils;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Main {
 
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
+
+        log.info("Pokrenula se aplikacija!");
+
+        List<Address> addressList = RepositoryGenerator.getAddressRepository().findAll();
+
+        Address newAddress =
+            new Address("Ilica",
+                City.ZAGREB,
+                1);
+
+        RepositoryGenerator.getAddressRepository().save(newAddress);
+
+
+
+        List<Address> updatedAddressList = RepositoryGenerator.getAddressRepository().findAll();
+
 
         Thread thread = new Thread(new TheMostExpensiveRealEstateThread());
         thread.start();
@@ -20,8 +41,11 @@ public class Main {
         List<Owner> ownerList =
             RepositoryGenerator.getOwnerRepository().findAll();
 
+        /*
         List<Address> addressList =
             RepositoryGenerator.getAddressRepository().findAll();
+
+         */
 
         List<RealEstate> myRealEstates =
             RepositoryGenerator.getRealEstateRepository().findAll();
@@ -30,7 +54,7 @@ public class Main {
                 .max((re1, re2) -> re1.getPrice().compareTo(re2.getPrice()))
                 .get();
 
-        System.out.println("The most expensive real estate is " + theMostExpensiveRealEstate);
+        log.info("The most expensive real estate is " + theMostExpensiveRealEstate);
 
         Optional<RealEstate> theCheapestRealEstateOptional = myRealEstates.stream()
                 .min((re1, re2) -> re1.getPrice().compareTo(re2.getPrice()));

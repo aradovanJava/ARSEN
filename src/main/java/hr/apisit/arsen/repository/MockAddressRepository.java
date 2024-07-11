@@ -2,8 +2,10 @@ package hr.apisit.arsen.repository;
 
 import hr.apisit.arsen.enumeration.City;
 import hr.apisit.arsen.model.Address;
+import hr.apisit.arsen.model.Entity;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MockAddressRepository implements AddressRepository {
@@ -12,25 +14,25 @@ public class MockAddressRepository implements AddressRepository {
 
   static {
     Address firstHouseAddress =
-        new Address(
+        new Address(1,
             "Paljetkova",
             City.ZAGREB,
             18);
 
     Address secondHouseAddress =
-        new Address(
+        new Address(2,
             "Slavonska avenija",
             City.ZAGREB,
             102);
 
     Address firstAparmentAddress =
-        new Address(
+        new Address(3,
             "Dubrava",
                   City.ZAGREB,
             5);
 
     Address secondAparmentAddress =
-        new Address(
+        new Address(4,
             "Tratinska",
             City.ZAGREB,
             50);
@@ -60,5 +62,22 @@ public class MockAddressRepository implements AddressRepository {
     return addressList.stream()
         .filter(a -> a.getStreet().toUpperCase().contains(street.toUpperCase()))
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public Address save(Address address) {
+    Integer nextId = addressList.stream()
+        .map(Entity::getId)
+        .reduce(0, Integer::max);
+
+    address.setId(nextId + 1);
+    addressList.add(address);
+    return address;
+  }
+
+  @Override
+  public Optional<Address> findByHighestHouseNumber() {
+    return addressList.stream()
+        .max((a1, a2) -> a1.getHouseNumber().compareTo(a2.getHouseNumber()));
   }
 }

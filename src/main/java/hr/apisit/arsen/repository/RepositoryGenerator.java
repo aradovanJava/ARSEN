@@ -10,7 +10,7 @@ public class RepositoryGenerator {
 
   public static AddressRepository getAddressRepository() {
     if(Optional.ofNullable(addressRepository).isEmpty()) {
-      addressRepository = new MockAddressRepository();
+      addressRepository = new FileAddressRepository();
     }
     return addressRepository;
   }
