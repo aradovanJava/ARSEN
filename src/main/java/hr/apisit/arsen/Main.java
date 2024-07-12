@@ -56,15 +56,6 @@ public class Main {
     Thread thread = new Thread(new TheMostExpensiveRealEstateThread());
     thread.start();
 
-    List<Owner> ownerList =
-        RepositoryGenerator.getOwnerRepository().findAll();
-
-        /*
-        List<Address> addressList =
-            RepositoryGenerator.getAddressRepository().findAll();
-
-         */
-
     List<RealEstate> myRealEstates =
         RepositoryGenerator.getRealEstateRepository().findAll();
 
@@ -72,7 +63,7 @@ public class Main {
         .max((re1, re2) -> re1.getPrice().compareTo(re2.getPrice()))
         .get();
 
-    log.info("The most expensive real estate is " + theMostExpensiveRealEstate);
+    log.info("The most expensive real estate is {}", theMostExpensiveRealEstate);
 
     Optional<RealEstate> theCheapestRealEstateOptional = myRealEstates.stream()
         .min((re1, re2) -> re1.getPrice().compareTo(re2.getPrice()));
