@@ -1,7 +1,9 @@
 package hr.apisit.arsen.model;
 
 import java.time.LocalDate;
+import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 public abstract class Person {
     private String oib;
     private String firstName;

@@ -2,6 +2,9 @@ package hr.apisit.arsen.model;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 public abstract non-sealed class RealEstate implements Transferable {
 
@@ -88,5 +91,25 @@ public abstract non-sealed class RealEstate implements Transferable {
                 ", numberOfRooms=" + numberOfRooms +
                 ", numberOfBalconies=" + numberOfBalconies +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        RealEstate that = (RealEstate) o;
+        return Objects.equals(address, that.address) && Objects.equals(area,
+            that.area) && Objects.equals(price, that.price) && Objects.equals(
+            numberOfRooms, that.numberOfRooms) && Objects.equals(numberOfBalconies,
+            that.numberOfBalconies) && Objects.equals(ownerList, that.ownerList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(address, area, price, numberOfRooms, numberOfBalconies, ownerList);
     }
 }

@@ -2,7 +2,9 @@ package hr.apisit.arsen.model;
 
 import java.math.BigDecimal;
 import java.util.List;
+import lombok.ToString;
 
+@ToString
 public class Apartment extends RealEstate {
 
     private Integer floorNumber;
